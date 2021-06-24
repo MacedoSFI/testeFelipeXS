@@ -2,12 +2,14 @@ package br.com.felipe.pokemon.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 //import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +22,6 @@ import br.com.felipe.pokemon.dto.PokemonDto;
 import br.com.felipe.pokemon.form.PokemonForm;
 import br.com.felipe.pokemon.model.Pokemon;
 import br.com.felipe.pokemon.repository.PokemonRepository;
-import net.felipemacedo.equipes.controller.dto.DetalhesDoProjetoDto;
-import net.felipemacedo.equipes.model.Projeto;
 
 @RestController
 @RequestMapping("/pokemons")
@@ -59,5 +59,16 @@ public class PokemonController {
 		Pokemon pokemon = pokemonRepository.getOne(id);
 		return new PokemonDto(pokemon);
 	}
+	
+	@DeleteMapping("/{id}")
+	  @Transactional public ResponseEntity<?> remover(@PathVariable Long id) {
+		  Optional<Pokemon> optional = pokemonRepository.findById(id); 
+		  if (optional.isPresent()) { 
+			pokemonRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		  }
+	  
+	  	  return ResponseEntity.notFound().build();
+	  }
 
 }
