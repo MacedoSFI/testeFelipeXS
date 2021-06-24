@@ -22,6 +22,18 @@ public class Pokemon {
 	@OneToOne
 	private Evolucao next_evolution;
 	
+	public Pokemon() {
+		
+	}
+	
+	
+	public Pokemon(String num, String name, String tipo) {
+		this.num = num;
+		this.name = name;
+		this.tipo = tipo;
+	}
+
+
 	public String getTipo() {
 		return tipo;
 	}

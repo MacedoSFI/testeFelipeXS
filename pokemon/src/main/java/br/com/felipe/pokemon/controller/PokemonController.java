@@ -1,26 +1,36 @@
 package br.com.felipe.pokemon.controller;
 
-import java.util.Arrays;
+import java.net.URI;
 import java.util.List;
 
+import javax.transaction.Transactional;
+//import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.felipe.pokemon.dto.PokemonDto;
+import br.com.felipe.pokemon.form.PokemonForm;
 import br.com.felipe.pokemon.model.Pokemon;
 import br.com.felipe.pokemon.repository.PokemonRepository;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/pokemons")
 public class PokemonController {
 	
 
 	@Autowired
 	private PokemonRepository pokemonRepository;
 	
-	@GetMapping("/pokemons")
+	//Metodo GET "pokemons": Retorna todos os pokemons;
+	
+	@GetMapping
 	//@RequestMapping("/pokemons")
 	public List<PokemonDto> listar() {
 
@@ -28,7 +38,14 @@ public class PokemonController {
 		return PokemonDto.converter(pokemons);
 	}
 	
-	
-	//Metodo GET "pokemons": Retorna todos os pokemons;
+	//Método Post cadastrando	
+	@PostMapping
+	@Transactional
+	public ResponseEntity<PokemonDto> cadastrar(@RequestBody PokemonForm form, UriComponentsBuilder uriBuilder) {
+		Pokemon pokemon = form.converter();
+		pokemonRepository.save(pokemon);
+		URI uri = uriBuilder.path("/pokemons/{id}").buildAndExpand(pokemon.getId()).toUri();
+		return ResponseEntity.created(uri).body(new PokemonDto(pokemon));
+	}
 
 }
