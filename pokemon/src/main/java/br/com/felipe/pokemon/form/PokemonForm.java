@@ -2,6 +2,7 @@ package br.com.felipe.pokemon.form;
 
 import br.com.felipe.pokemon.model.Evolucao;
 import br.com.felipe.pokemon.model.Pokemon;
+import br.com.felipe.pokemon.repository.PokemonRepository;
 
 public class PokemonForm {
 	
@@ -45,5 +46,12 @@ public class PokemonForm {
 	
 	public Pokemon converter() {
 		return new Pokemon(num, name, tipo);
+	}
+	
+	public Pokemon atualizar(Long id, PokemonRepository pokemonRepository) {
+		Pokemon pokemon = pokemonRepository.getOne(id);
+		pokemon.setName(this.name);
+		pokemon.setNum(this.num);
+		return pokemon;
 	}
 }
