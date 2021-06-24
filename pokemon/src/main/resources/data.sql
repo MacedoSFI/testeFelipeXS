@@ -1,2 +1,2 @@
-insert into pokemon(num, name) values ('001', 'Bubasaur');
-insert into pokemon(num, name) values ('002', 'Ivysaur');
+insert into pokemon(num, name, tipo) values ('001', 'Bubasaur', 'Grass');
+insert into pokemon(num, name, tipo) values ('002', 'Ivysaur', 'Grass');

@@ -5,15 +5,13 @@ import java.util.stream.Collectors;
 
 import br.com.felipe.pokemon.model.Evolucao;
 import br.com.felipe.pokemon.model.Pokemon;
-import br.com.felipe.pokemon.model.Tipo;
-
 
 public class PokemonDto {
 	
 	private Long id;
 	private String num;
 	private String name;
-	private List<Tipo> tipos;//(Grass, Poison, Fire, Flying, Water, Bug e etc);
+	private String tipo;
 	private Evolucao pre_evolution;
 	private Evolucao next_evolution;
 	
@@ -21,7 +19,7 @@ public class PokemonDto {
 		this.id = pokemon.getId();
 		this.num = pokemon.getNum();
 		this.name = pokemon.getName();
-		this.tipos = pokemon.getTipos();
+		this.tipo = pokemon.getTipo();//this.tipo = pokemon.getTipo();
 		this.pre_evolution = pokemon.getPre_evolution();
 		this.next_evolution = pokemon.getNext_evolution();
 	}
@@ -50,12 +48,11 @@ public class PokemonDto {
 		this.name = name;
 	}
 
-	public List<Tipo> getTipos() {
-		return tipos;
+	public String getTipo() {
+		return tipo;
 	}
-
-	public void setTipos(List<Tipo> tipos) {
-		this.tipos = tipos;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public Evolucao getPre_evolution() {
